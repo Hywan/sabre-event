@@ -1,6 +1,16 @@
 ChangeLog
 =========
 
+3.0.0-alpha1 (????-??-??)
+-------------------------
+
+* Added: flow(), which uses generators to turn Promise-based code into regular
+  code again.
+* Added: Loop object, to create the illusion of an event-loop in PHP.
+* Changed: Promise callbacks are now _always_ called asynchronously, even if
+  they are already resolved.
+
+
 2.0.0 (2014-06-21)
 ------------------
 
