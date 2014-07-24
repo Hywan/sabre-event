@@ -98,7 +98,7 @@ final class Loop {
     /**
      * Creates the instance of the loop.
      */
-    public function __construct() {
+    function __construct() {
 
         register_shutdown_function([$this, 'start']);
         $this->queue = new SplQueue();

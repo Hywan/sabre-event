@@ -38,7 +38,7 @@
    <!-- The PHP constants true, false, and null MUST be in lower case. -->
    <rule ref="Generic.PHP.LowerCaseConstant"/>
 
-   <rule ref="Squiz.Scope.MethodScope"/>
+   <!--<rule ref="Squiz.Scope.MethodScope"/>-->
    <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
 
    <!-- In the argument list, there MUST NOT be a space before each comma, and there MUST be one space after each comma. -->
