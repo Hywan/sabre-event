@@ -10,6 +10,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
     function testNonGenerator() {
 
         flow(function() {});
+        Loop::get()->start();
 
     }
 
@@ -23,6 +24,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
             yield;
 
         });
+        Loop::get()->start();
 
         $this->assertEquals(1, $start);
 
@@ -41,6 +43,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
             $start += (yield $promise);
 
         });
+        Loop::get()->start();
 
         $this->assertEquals(3, $start);
 
@@ -65,6 +68,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
             }
 
         });
+        Loop::get()->start();
 
         $this->assertEquals(3, $start);
 
@@ -89,6 +93,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
             }
 
         });
+        Loop::get()->start();
 
         $this->assertEquals(3, $start);
 
@@ -114,6 +119,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
             }
 
         });
+        Loop::get()->start();
 
         $this->assertEquals(3, $start);
 
@@ -133,6 +139,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $start);
 
         $promise->fulfill(2);
+        Loop::get()->start();
         $this->assertEquals(3, $start);
 
     }
@@ -157,6 +164,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $start);
 
         $promise->reject(new \Exception(2));
+        Loop::get()->start();
         $this->assertEquals(3, $start);
 
     }
@@ -177,6 +185,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
 
         });
 
+        Loop::get()->start();
         $this->assertEquals(7, $start);
 
     }
@@ -199,7 +208,9 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals(1, $start);
 
         $promise->reject(new \Exception(2));
+        Loop::get()->start();
         $this->assertEquals(3, $start);
+
 
     }
 
@@ -218,6 +229,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
         })->error(function($reason) {
             $this->fail($reason);
         });
+        Loop::get()->start();
         $this->assertTrue($ok);
 
     }
@@ -240,6 +252,7 @@ class FlowTest extends \PHPUnit_Framework_TestCase {
         });
 
         $promise->fulfill('omg it worked');
+        Loop::get()->start();
         $this->assertEquals('omg it worked', $ok);
 
     }

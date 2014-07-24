@@ -219,24 +219,27 @@ class Promise {
      */
     protected function invokeCallback(Promise $subPromise, callable $callBack = null) {
 
-        if (is_callable($callBack)) {
-            try {
-                $result = $callBack($this->value);
-                if ($result instanceof Promise) {
-                    $result->then([$subPromise, 'fulfill'], [$subPromise, 'reject']);
-                } else {
-                    $subPromise->fulfill($result);
+        $loop = Loop::get()->nextTick(function() use ($subPromise, $callBack) {
+            if (is_callable($callBack)) {
+                try {
+                    $result = $callBack($this->value);
+                    if ($result instanceof Promise) {
+                        $result->then([$subPromise, 'fulfill'], [$subPromise, 'reject']);
+                    } else {
+                        $subPromise->fulfill($result);
+                    }
+                } catch (Exception $e) {
+                    $subPromise->reject($e);
                 }
-            } catch (Exception $e) {
-                $subPromise->reject($e);
-            }
-        } else {
-            if ($this->state === self::FULFILLED) {
-                $subPromise->fulfill($this->value);
             } else {
-                $subPromise->reject($this->value);
+                if ($this->state === self::FULFILLED) {
+                    $subPromise->fulfill($this->value);
+                } else {
+                    $subPromise->reject($this->value);
+                }
             }
-        }
+
+        });
     }
 
 

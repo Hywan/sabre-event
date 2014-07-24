@@ -14,6 +14,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
             $finalValue=$value + 2;
         });
 
+        Loop::get()->start();
         $this->assertEquals(3, $finalValue);
 
     }
@@ -28,6 +29,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
             $finalValue=$value + 2;
         });
 
+        Loop::get()->start();
         $this->assertEquals(3, $finalValue);
 
     }
@@ -46,6 +48,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
             return $finalValue;
         });
 
+        Loop::get()->start();
         $this->assertEquals(7, $finalValue);
 
     }
@@ -66,6 +69,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
 
         $subPromise->fulfill(2);
 
+        Loop::get()->start();
         $this->assertEquals(6, $finalValue);
 
     }
@@ -81,6 +85,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
         });
 
         $promise->fulfill(4);
+        Loop::get()->start();
         $this->assertEquals(6, $finalValue);
 
     }
@@ -96,6 +101,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
         });
 
         $promise->reject(4);
+        Loop::get()->start();
         $this->assertEquals(6, $finalValue);
 
     }
@@ -112,6 +118,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
 
         });
 
+        Loop::get()->start();
         $this->assertEquals('hi', $realResult);
 
     }
@@ -132,6 +139,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
 
         });
 
+        Loop::get()->start();
         $this->assertEquals('hi', $realResult);
 
     }
@@ -144,6 +152,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
         $promise = new Promise();
         $promise->fulfill(1);
         $promise->fulfill(1);
+        Loop::get()->start();
 
     }
 
@@ -155,6 +164,7 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
         $promise = new Promise();
         $promise->reject(1);
         $promise->reject(1);
+        Loop::get()->start();
 
     }
 
@@ -179,7 +189,9 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(0, $ok);
         $promise->reject('foo');
+        Loop::get()->start();
         $this->assertEquals(1, $ok);
+
 
     }
 
@@ -196,8 +208,10 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
         });
 
         $promise1->fulfill(1);
+        Loop::get()->start();
         $this->assertEquals(0, $finalValue);
         $promise2->fulfill(2);
+        Loop::get()->start();
         $this->assertEquals([1,2], $finalValue);
 
     }
@@ -219,8 +233,10 @@ class PromiseTest extends \PHPUnit_Framework_TestCase {
         );
 
         $promise1->reject(1);
+        Loop::get()->start();
         $this->assertEquals(1, $finalValue);
         $promise2->reject(2);
+        Loop::get()->start();
         $this->assertEquals(1, $finalValue);
 
     }
